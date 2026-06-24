@@ -3,7 +3,7 @@
 #include <string>
 
 using T1 = int; // contador y posiciones   
-using T2 = double; // velocidad, tiempo y posiciones
+using T2 = float; // velocidad, tiempo y posiciones
 using SUT1 = int;
 using UUT1 = unsigned int; 
 
