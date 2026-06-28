@@ -86,6 +86,8 @@ void despacharSistemaMonitoreo() {
     std::cout << "  SISTEMA AUTOMATIZADO DE SEGURIDAD VIAL UNI-CC112\n";
     std::cout << "========================================================\n";
 
+    generarArchivoTrafico();
+
     if (verificarIntegridadDelRadar()) {
         ejecutarFlujoSimulacion<double>(30.0);
     } else {
@@ -93,4 +95,8 @@ void despacharSistemaMonitoreo() {
     }
 
     std::cout << "\n[Estatus] Saliendo del subproceso de monitoreo de manera limpia.\n";
+}
+int main() {
+    despacharSistemaMonitoreo();
+    return 0;
 }
