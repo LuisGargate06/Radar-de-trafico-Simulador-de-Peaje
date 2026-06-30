@@ -44,13 +44,13 @@ struct vehiculo {
             return velocidadActual > otro.velocidadActual;
         }
         //Imprimimos los adatos del auto
-        void mostrarFilaReporte(T limiteVelocidad) const{
-            std::cout << std::left << std::setw(6) << id << std::setw(12) << placa << std::setw(10) << velocidadActual;
+        void mostrarFilaReporte(T limiteVelocidad, ostream& os) const{
+            std::os << std::left << std::setw(6) << id << std::setw(12) << placa << std::setw(10) << velocidadActual;
             if(velocidadActual > limiteVelocidad){
-                std::cout << "MULTA POR EXCESO"<< std::endl;
+                os << "MULTA POR EXCESO"<< std::endl;
             }
             else{
-                std::cout << "OK"<< std::endl;
+                os << "OK"<< std::endl;
             }
         }
 };      

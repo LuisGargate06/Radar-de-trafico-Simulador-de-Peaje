@@ -1,6 +1,6 @@
 *.o
 main
-main.exe
+*.exe
 *.dSYM
 *.DS_Store
 *.swp

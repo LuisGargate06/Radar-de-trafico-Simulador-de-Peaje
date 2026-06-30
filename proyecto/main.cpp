@@ -5,8 +5,8 @@
 
 template <typename T>
 void ordenarVehiculosPorVelocidad(vehiculo<T>* arreglos, UT1 tamaño) {
-    for (UT1 i = 0; i < tamaño - 1; ++i) {
-        for (UT1 j = 0; j < tamaño - i - 1; ++j) {
+    for (size_t i = 0; i < tamaño - 1; ++i) {
+        for (size_t j = 0; j < tamaño - i - 1; ++j) {
             //Comparamos los valores
             if(arreglos[j].esMasRapidoQue(arreglos[j+1])){
                 vehiculo<T> temp1 = arreglos[j];
@@ -21,41 +21,41 @@ template <typename T>
 struct SistemaMonitoreo {
     T2 limite;
 
-    SistemaMonitoreo(T2 lim) : limite(lim) {
-        std::cout <<"[SistemaMonitoreo] Inicializacion con limite de: " << limite << " m/s" << std::endl;
+    SistemaMonitoreo(T2 lim, ostream& os) : limite(lim) {
+        os <<"[SistemaMonitoreo] Inicializacion con limite de: " << limite << " m/s" << std::endl;
     }
-    ~SistemaMonitoreo() {
-        std::cout <<"[SistemaMonitoreo] Destructor invocado de manera segura (RAII)" << std::endl;
+    ~SistemaMonitoreo(ostream& os) {
+        os <<"[SistemaMonitoreo] Destructor invocado de manera segura (RAII)" << std::endl;
     }
-    void procesarYReportar(vehiculo<T> listaAutos[], T1 cantidad) {
-        std::cout << " Reporte de trafico y captura de infractores" << std::endl;
-        std::cout << std::left << std::setw(6) << "ID" << std::setw(12) << "PLACA" << std::setw(10) << "VELOCIDAD" << "ESTADO\n";
-        std::cout << std::endl;
+    void procesarYReportar(vehiculo<T> listaAutos[], T1 cantidad, ostream& os) {
+        os << " Reporte de trafico y captura de infractores" << std::endl;
+        os << std::left << std::setw(6) << "ID" << std::setw(12) << "PLACA" << std::setw(10) << "VELOCIDAD" << "ESTADO\n";
+        os << std::endl;
 
         for (T1 i = 0; i < cantidad; ++i) {
-        listaAutos[i].mostrarFilaReporte(limite);
+            listaAutos[i].mostrarFilaReporte(limite);
+        }
+        os << std::endl;
     }
-    std::cout << std::endl;
-  }
 }; 
 
-void generarArchivoTrafico() {
+void generarArchivoTrafico(ostream& os) {
     std::ofstream archivo("trafico.txt");
     if (archivo.is_open()) {
         archivo << "4\n";
-        archivo << "1 100.0 4.0 ABC1234\n";
-        archivo << "2 150.0 3.0 XYZ5678\n";
+        archivo << "1 100.0 0.0 ABC1234\n";
+        archivo << "2 150.0 -3.0 XYZ5678\n";
         archivo << "3 120.0 5.0 DEF9012\n";
         archivo << "4 200.0 2.0 GHI3456\n";
         archivo.close();
-        std::cout<<"[Disco] Archivo 'trafico.txt' generado correctamente."<<std::endl;
+        os<<"[Disco] Archivo 'trafico.txt' generado correctamente."<<std::endl;
     } else {
-        std::cout<< "[Error] No se pudo generar el archivo 'trafico.txt'." << std::endl;
+        os<< "[Error] No se pudo generar el archivo 'trafico.txt'." << std::endl;
     }   
 }
 template <typename T>
-void ejecutarFlujoSimulacion(T2 limiteVelocidadLegal) {
-    std::cout << "\n>>> [Modulo Control] Iniciando orquestacion de componentes <<<\n";
+void ejecutarFlujoSimulacion(T2 limiteVelocidadLegal, ostream& os) {
+    os << "\n>>> [Modulo Control] Iniciando orquestacion de componentes <<<\n";
 
     generarArchivoTrafico();
 
@@ -63,43 +63,43 @@ void ejecutarFlujoSimulacion(T2 limiteVelocidadLegal) {
     vehiculo<T> loteVehiculos[max_vehiculos];
     vehiculo<T>* ptrLote = loteVehiculos;
 
-    std::cout << "[Modulo Control] Leyendo flujo desde 'trafico.txt'...\n";
+    os << "[Modulo Control] Leyendo flujo desde 'trafico.txt'...\n";
     loteVehiculos[0].capturarTraficoSimulado(loteVehiculos, &cantidadDetectados);
-    std::cout << "[Modulo Control] Sincronizacion exitosa. Vehiculos detectados: " << cantidadDetectados << "\n";
-    std::cout << "[Modulo Control] Delegando ordenamiento al algoritmo Bubble Sort...\n";
+    os << "[Modulo Control] Sincronizacion exitosa. Vehiculos detectados: " << cantidadDetectados << "\n";
+    os << "[Modulo Control] Delegando ordenamiento al algoritmo Bubble Sort...\n";
     ordenarVehiculosPorVelocidad(ptrLote, cantidadDetectados);
     SistemaMonitoreo<T> monitor(limiteVelocidadLegal);
-        monitor.procesarYReportar(ptrLote, cantidadDetectados);
+    monitor.procesarYReportar(ptrLote, cantidadDetectados);
     
-    std::cout << ">>> [Modulo Control] Flujo finalizado correctamente. Liberando recursos <<<\n";
+    os << ">>> [Modulo Control] Flujo finalizado correctamente. Liberando recursos <<<\n";
 }
 
-bool verificarIntegridadDelRadar() {
-    std::cout << "[Hardware] Realizando test de estres en los sensores de barrido...\n";
+bool verificarIntegridadDelRadar(ostream& os) {
+    os << "[Hardware] Realizando test de estres en los sensores de barrido...\n";
     std::ifstream prueba("trafico.txt");
     if (!prueba.good()) {
-        std::cerr << "[CRITICAL] Fallo de hardware: El sensor fisico no responde.\n";
+        os << "[CRITICAL] Fallo de hardware: El sensor fisico no responde.\n";
         return false;
     }
     prueba.close();
-    std::cout << "[Hardware] Canal I/O operativo. Sensor calibrado al 100%.\n";
+    os << "[Hardware] Canal I/O operativo. Sensor calibrado al 100%.\n";
     return true;
 }
 
-void despacharSistemaMonitoreo() {
-    std::cout << "========================================================\n";
-    std::cout << "  SISTEMA AUTOMATIZADO DE SEGURIDAD VIAL UNI-CC112\n";
-    std::cout << "========================================================\n";
+void despacharSistemaMonitoreo(ostream& os) {
+    os << "========================================================\n";
+    os << "  SISTEMA AUTOMATIZADO DE SEGURIDAD VIAL UNI-CC112\n";
+    os << "========================================================\n";
 
     generarArchivoTrafico();
 
     if (verificarIntegridadDelRadar()) {
         ejecutarFlujoSimulacion<T2>(30.0);
     } else {
-        std::cerr << "[Core] Abortando secuencia por falla en infraestructura.\n";
+        os << "[Core] Abortando secuencia por falla en infraestructura.\n";
     }
 
-    std::cout << "\n[Estatus] Saliendo del subproceso de monitoreo de manera limpia.\n";
+    os << "\n[Estatus] Saliendo del subproceso de monitoreo de manera limpia.\n";
 }
 int main() {
     despacharSistemaMonitoreo();

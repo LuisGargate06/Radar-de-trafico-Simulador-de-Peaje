@@ -2,13 +2,8 @@ CXX = g++
 CXXFLAGS = -std=c++2b -Wall -g -pthread # Añadido -pthread
 LDFLAGS = -pthread # Añadido -pthread
 
-TARGET = main
-SRCS = main.cpp arit.cpp \
-       util.cpp \
-	   sorting.cpp \
-	   punteros.cpp \
-	   vector.cpp \
-	   matrix.cpp
+TARGET = simulador_radar.exe
+SRCS = proyecto/main.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
