@@ -1,10 +1,9 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
-#include <string>
 
 using T1 = int; // contador y posiciones   
 using T2 = float; // velocidad, tiempo y posiciones
-using SUT1 = int;
+using T3 = char;
 using UUT1 = unsigned int; 
 
 #define __UNIFIED__   //enciendo

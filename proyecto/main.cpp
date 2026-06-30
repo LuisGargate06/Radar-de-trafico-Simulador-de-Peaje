@@ -64,7 +64,7 @@ void ejecutarFlujoSimulacion(T2 limiteVelocidadLegal) {
     vehiculo<T>* ptrLote = loteVehiculos;
 
     std::cout << "[Modulo Control] Leyendo flujo desde 'trafico.txt'...\n";
-    ptrLote->capturarTraficoSimulado(loteVehiculos, &cantidadDetectados);
+    loteVehiculos[0].capturarTraficoSimulado(loteVehiculos, &cantidadDetectados);
     std::cout << "[Modulo Control] Sincronizacion exitosa. Vehiculos detectados: " << cantidadDetectados << "\n";
     std::cout << "[Modulo Control] Delegando ordenamiento al algoritmo Bubble Sort...\n";
     ordenarVehiculosPorVelocidad(ptrLote, cantidadDetectados);
@@ -94,7 +94,7 @@ void despacharSistemaMonitoreo() {
     generarArchivoTrafico();
 
     if (verificarIntegridadDelRadar()) {
-        ejecutarFlujoSimulacion<double>(30.0);
+        ejecutarFlujoSimulacion<T2>(30.0);
     } else {
         std::cerr << "[Core] Abortando secuencia por falla en infraestructura.\n";
     }

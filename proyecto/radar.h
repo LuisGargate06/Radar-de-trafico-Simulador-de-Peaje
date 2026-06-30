@@ -3,9 +3,10 @@
 #include "types1.h"
 #include <cstddef> //Para el size_t
 #include <fstream> // Para el ifstream
+#include <iomanip>
 
 //Suponemos que el hardware tiene un alcance de 50 metros 
-//Por ende en un carril tiene como capacidad máxima de 12 vehículos
+//Por ende en un carril tiene como capacidad máxima de 10 vehículos
 const T1 max_vehiculos = 10;
 
 //Creamos un struct
@@ -15,7 +16,7 @@ struct vehiculo {
     private:
         T1 id;
         T velocidadActual;
-        char placa[8];
+        T3 placa[8];
     
     public:
         //Constructor
@@ -25,7 +26,7 @@ struct vehiculo {
             placa[0] = '\0';
         }
 
-        void llenarDatos(T1 m_id, T m_velocidad, const char* m_placa){
+        void llenarDatos(T1 m_id, T m_velocidad, const T3* m_placa){
             id = m_id;
             velocidadActual = m_velocidad;
             for(size_t i = 0; i < 7; i++){
@@ -89,7 +90,7 @@ void vehiculo<T>:: capturarTraficoSimulado(vehiculo<T> listaAutos[], T1* cantida
     T1 temp_id;
     T temp_dX;
     T temp_dT;
-    char temp_placa[8];
+    T3 temp_placa[8];
     T velocidadCalculada;
 
     //Creamos un bucle para leer cada fila
