@@ -6,7 +6,7 @@ void generarArchivoTrafico(std::ostream& os) {
     std::ofstream archivo("trafico.txt");
     if (archivo.is_open()) {
         archivo << "4\n";
-        archivo << "1 100.0 0.0 ABC1234\n";
+        archivo << "1 100.0 1.0 ABC1234\n";
         archivo << "2 150.0 -3.0 XYZ5678\n";
         archivo << "3 120.0 5.0 DEF9012\n";
         archivo << "4 200.0 2.0 GHI3456\n";
