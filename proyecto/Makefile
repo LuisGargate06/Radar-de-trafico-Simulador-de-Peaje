@@ -3,7 +3,7 @@ CXXFLAGS = -std=c++2b -Wall -g -pthread # Añadido -pthread
 LDFLAGS = -pthread # Añadido -pthread
 
 TARGET = simulador_radar.exe
-SRCS = proyecto/main.cpp
+SRCS = proyecto/main.cpp proyecto/simulacion.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
